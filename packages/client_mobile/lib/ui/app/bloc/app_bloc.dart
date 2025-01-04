@@ -1,4 +1,5 @@
 import 'package:client_mobile/ui/app/di/app_scope.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared/imports.dart';
 
 part 'app_event.dart';
@@ -9,6 +10,7 @@ part 'app_bloc.freezed.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   UserModel? user;
+  late FirebaseAuth firebaseAuth;
 
   AppBloc({
     required BuildContext ctx,
@@ -29,8 +31,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     try {
       emit(const _LoadingAppState());
+      firebaseAuth = FirebaseAuth.instance;
       authRepo = _appScope.authRepository;
       emit(const _LoadingAppState());
+      FirebaseAuth.instance.authStateChanges().listen((User? value) async {
+        print('USER: ${value?.uid}');
+        if (value != null) {
+          await value.getIdToken().then((value) async {
+            if (value != null) {
+              await _appScope.tokenStorage.write(AuthTokenPair(
+                accessToken: value,
+              ));
+            }
+          });
+          user = UserModel(
+            id: value.uid,
+            name: value.displayName,
+            email: value.email,
+            phone: value.phoneNumber,
+          );
+        }
+      });
       // final tokens = await _appScope.tokenStorage.read();
       // user = const UserModel(
       //   googleId: '0987654321',
@@ -62,8 +83,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             pageState: PageState.error,
           ),
         );
-      } else if (err.response?.statusCode != 401 &&
-          err.response?.statusCode != 403) {
+      } else if (err.response?.statusCode != 401 && err.response?.statusCode != 403) {
         emit(
           _InfoAppState(
             message: err.response?.data["message"].toString() ?? '',

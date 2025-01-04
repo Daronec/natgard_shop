@@ -82,7 +82,6 @@ class AppInterceptors {
 
     return const AuthTokenPair(
       accessToken: '',
-      refreshToken: '',
     );
   }
 }

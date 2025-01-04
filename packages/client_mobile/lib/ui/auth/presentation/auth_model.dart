@@ -208,7 +208,6 @@ final class AuthModel extends BaseModel {
           appScope.tokenStorage.write(
             AuthTokenPair(
               accessToken: credential!.accessToken!,
-              refreshToken: credential!.accessToken!,
             ),
           );
           _authState.content(AuthState.success);
