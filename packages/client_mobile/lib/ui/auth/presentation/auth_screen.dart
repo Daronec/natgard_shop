@@ -1,5 +1,6 @@
 import 'package:client_mobile/ui/auth/presentation/auth_model.dart';
 import 'package:client_mobile/ui/auth/presentation/widgets/authentication_body.dart';
+import 'package:client_mobile/ui/auth/presentation/widgets/link_sended.dart';
 import 'package:client_mobile/ui/auth/presentation/widgets/recovery_password_body.dart';
 import 'package:client_mobile/ui/auth/presentation/widgets/registration_body.dart';
 import 'package:client_mobile/ui/widgets/app_scaffold/app_scaffold.dart';
@@ -24,7 +25,19 @@ class AuthScreen extends ElementaryWidget<IAuthWM> {
         padding: const EdgeInsets.all(16),
         child: UnionStateListenableBuilder(
             unionStateListenable: wm.authState,
-            loadingBuilder: (_, activityState) => const CircularProgressIndicatorWidget(),
+            loadingBuilder: (_, authState) => Stack(
+                  children: [
+                    if (authState != null)
+                      authState.maybeMap(
+                        orElse: () => const SizedBox(),
+                        authentication: () => AuthenticationBody(wm: wm),
+                        registration: () => RegistrationBody(wm: wm),
+                        recoveryPassword: () => RecoveryPasswordBody(wm: wm),
+                        linkSended: () => LinkSended(wm: wm),
+                      ),
+                    const CircularProgressIndicatorWidget(),
+                  ],
+                ),
             failureBuilder: (_, ex, authState) {
               if (ex != null) {
                 showMessage(
@@ -50,7 +63,7 @@ class AuthScreen extends ElementaryWidget<IAuthWM> {
                 authentication: () => AuthenticationBody(wm: wm),
                 registration: () => RegistrationBody(wm: wm),
                 recoveryPassword: () => RecoveryPasswordBody(wm: wm),
-                code: () => const SizedBox(),
+                linkSended: () => LinkSended(wm: wm),
               );
             }),
       ),

@@ -9,7 +9,6 @@ part 'app_state.dart';
 part 'app_bloc.freezed.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  UserModel? user;
   late FirebaseAuth firebaseAuth;
 
   AppBloc({
@@ -44,36 +43,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
               ));
             }
           });
-          user = UserModel(
-            id: value.uid,
-            name: value.displayName,
-            email: value.email,
-            phone: value.phoneNumber,
-          );
         }
       });
-      // final tokens = await _appScope.tokenStorage.read();
-      // user = const UserModel(
-      //   googleId: '0987654321',
-      //   typeOs: 'ANDROID',
-      //   secret: secretKey,
-      // );
-      // await authRepo.register(user: user!).then((_) async {
-      //   await authRepo.getCurrentUser().then((value) async {
-      //     user = value;
-      //
-      //     final firebaseToken = Preferences.loadFirebaseToken();
-      //     if (firebaseToken != null) {
-      //       // user = value.copyWith(
-      //       //   firebaseToken: firebaseToken,
-      //       //   typeOs: defaultTargetPlatform == TargetPlatform.android
-      //       //       ? 'ANDROID'
-      //       //       : 'IOS',
-      //       // );
-      //       await authRepo.editUser(user!);
-      //     }
-      //   });
-      // });
       emit(const _DataAppState());
     } on DioException catch (err) {
       if ((err.response?.statusCode ?? 0) > 500) {

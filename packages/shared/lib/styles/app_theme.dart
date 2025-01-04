@@ -20,6 +20,7 @@ abstract class AppTheme {
       inversePrimary: AppColors.white,
       secondary: AppColors.secondary,
       onSecondary: AppColors.secondary,
+      tertiary: AppColors.darkGrey,
       error: AppColors.error,
       onError: AppColors.error,
       surface: AppColors.darkGreen,
@@ -212,14 +213,15 @@ abstract class AppTheme {
     ///  Navbar theme
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       showUnselectedLabels: true,
-      backgroundColor: AppColors.background,
+      showSelectedLabels: true,
+      backgroundColor: AppColors.white,
       type: BottomNavigationBarType.fixed,
       selectedLabelStyle: AppTextTheme.textTheme.labelMedium!.copyWith(
-        color: Colors.white,
+        color: AppColors.primary,
         fontSize: 9,
       ),
       unselectedLabelStyle: AppTextTheme.textTheme.labelMedium!.copyWith(
-        color: Colors.white,
+        color: AppColors.text,
         fontWeight: FontWeight.w500,
         fontSize: 9,
       ),

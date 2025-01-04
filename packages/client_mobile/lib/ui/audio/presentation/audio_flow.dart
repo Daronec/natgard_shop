@@ -15,10 +15,10 @@ class AudioFlow extends StatelessWidget {
       onDispose: (scope) => scope.dispose(),
       child: const AppScaffold(
         appBar: CustomAppBar(
-          title: 'Личный кабинет',
+          title: 'Аудио',
           showBackButton: false,
         ),
-        child:  AudioScreen(),
+        child: AudioScreen(),
       ),
     );
   }

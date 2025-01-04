@@ -7,7 +7,6 @@ class AppAvatar extends StatelessWidget {
     this.size = 38,
     this.onTap,
     this.errorWidget,
-    this.quality,
     this.tag,
   }) : super(key: key);
 
@@ -15,7 +14,6 @@ class AppAvatar extends StatelessWidget {
   final double size;
   final Function()? onTap;
   final Widget? errorWidget;
-  final double? quality;
   final String? tag;
 
   static void showAvatar({
@@ -178,15 +176,17 @@ class AppAvatar extends StatelessWidget {
           height: size,
           decoration: BoxDecoration(
             color: AppColors.grey,
-            borderRadius: BorderRadius.circular(40),
+            border: Border.all(
+              width: 2,
+              color: AppColors.darkGrey,
+            ),
+            borderRadius: BorderRadius.circular(size / 2),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),
             child: imageId.isNotEmpty
                 ? CachedNetworkImage(
-                    imageUrl: "$baseUrl$clientService"
-                        "?id=$imageId"
-                        "&quality=${quality ?? '0.5'}",
+                    imageUrl: imageId,
                     errorListener: (errors) {
                       debugPrint(errors.toString());
                     },
@@ -232,7 +232,7 @@ class AppAvatar extends StatelessWidget {
                   )
                 : errorWidget ??
                     CircleAvatar(
-                      radius: size,
+                      radius: size / 2,
                       backgroundColor: AppColors.background,
                       child: Center(
                         child: Icon(
@@ -338,8 +338,7 @@ class AppAvatarBackground extends StatelessWidget {
     );
   }
 
-  static AppAvatarBackground of(BuildContext context) =>
-      AppAvatarBackground.of(context);
+  static AppAvatarBackground of(BuildContext context) => AppAvatarBackground.of(context);
 }
 
 // Navigator.of(context).push(

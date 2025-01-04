@@ -11,27 +11,34 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
-      nickname: json['nickname'] as String?,
+      patronymic: json['patronymic'] as String?,
       avatar: json['avatar'] as String?,
       email: json['email'] as String?,
-      birthday: json['birthday'] == null
-          ? null
-          : DateTime.parse(json['birthday'] as String),
+      birthday: _fromJsonTimestamp(json['birthday'] as Timestamp?),
       gender: json['gender'] as String?,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'surname': instance.surname,
-      'nickname': instance.nickname,
-      'avatar': instance.avatar,
-      'email': instance.email,
-      'birthday': instance.birthday?.toIso8601String(),
-      'gender': instance.gender,
-      'phone': instance.phone,
-      'address': instance.address,
-    };
+Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+    'surname': instance.surname,
+    'patronymic': instance.patronymic,
+    'avatar': instance.avatar,
+    'email': instance.email,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('birthday', _toJsonTimestamp(instance.birthday));
+  val['gender'] = instance.gender;
+  val['phone'] = instance.phone;
+  val['address'] = instance.address;
+  return val;
+}

@@ -1,3 +1,4 @@
+import 'package:client_mobile/ui/app/di/app_scope.dart';
 import 'package:shared/imports.dart';
 
 import 'app_scaffold_view_model.dart';
@@ -69,9 +70,9 @@ class _AppScaffoldState extends State<AppScaffold> {
   }
 
   void getToken(BuildContext context) async {
-    // final appScope = context.read<IAppScope>();
-    // final tokens = await appScope.tokenStorage.read();
-    // token = tokens?.accessToken;
+    final appScope = context.read<IAppScope>();
+    final tokens = await appScope.tokenStorage.read();
+    token = tokens?.accessToken;
   }
 
   @override
@@ -97,6 +98,15 @@ class _AppScaffoldState extends State<AppScaffold> {
                   ],
                 ),
                 child: BottomNavigationBar(
+                  selectedLabelStyle: theme.textTheme.labelMedium!.copyWith(
+                    color: AppColors.primary,
+                    fontSize: 9,
+                  ),
+                  unselectedLabelStyle: theme.textTheme.labelMedium!.copyWith(
+                    color: AppColors.text,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 9,
+                  ),
                   currentIndex: viewModel.calculateSelectedIndex(context),
                   onTap: (int index) => viewModel.onItemTapped(
                     index,

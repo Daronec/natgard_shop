@@ -23,9 +23,13 @@ mixin _$UserModel {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get surname => throw _privateConstructorUsedError;
-  String? get nickname => throw _privateConstructorUsedError;
+  String? get patronymic => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  @JsonKey(
+      fromJson: _fromJsonTimestamp,
+      toJson: _toJsonTimestamp,
+      includeIfNull: false)
   DateTime? get birthday => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -50,9 +54,13 @@ abstract class $UserModelCopyWith<$Res> {
       {String? id,
       String? name,
       String? surname,
-      String? nickname,
+      String? patronymic,
       String? avatar,
       String? email,
+      @JsonKey(
+          fromJson: _fromJsonTimestamp,
+          toJson: _toJsonTimestamp,
+          includeIfNull: false)
       DateTime? birthday,
       String? gender,
       String? phone,
@@ -77,7 +85,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? id = freezed,
     Object? name = freezed,
     Object? surname = freezed,
-    Object? nickname = freezed,
+    Object? patronymic = freezed,
     Object? avatar = freezed,
     Object? email = freezed,
     Object? birthday = freezed,
@@ -98,9 +106,9 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      patronymic: freezed == patronymic
+          ? _value.patronymic
+          : patronymic // ignore: cast_nullable_to_non_nullable
               as String?,
       avatar: freezed == avatar
           ? _value.avatar
@@ -142,9 +150,13 @@ abstract class _$$UserModelImplCopyWith<$Res>
       {String? id,
       String? name,
       String? surname,
-      String? nickname,
+      String? patronymic,
       String? avatar,
       String? email,
+      @JsonKey(
+          fromJson: _fromJsonTimestamp,
+          toJson: _toJsonTimestamp,
+          includeIfNull: false)
       DateTime? birthday,
       String? gender,
       String? phone,
@@ -167,7 +179,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? surname = freezed,
-    Object? nickname = freezed,
+    Object? patronymic = freezed,
     Object? avatar = freezed,
     Object? email = freezed,
     Object? birthday = freezed,
@@ -188,9 +200,9 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.surname
           : surname // ignore: cast_nullable_to_non_nullable
               as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      patronymic: freezed == patronymic
+          ? _value.patronymic
+          : patronymic // ignore: cast_nullable_to_non_nullable
               as String?,
       avatar: freezed == avatar
           ? _value.avatar
@@ -227,9 +239,13 @@ class _$UserModelImpl implements _UserModel {
       {this.id,
       this.name,
       this.surname,
-      this.nickname,
+      this.patronymic,
       this.avatar,
       this.email,
+      @JsonKey(
+          fromJson: _fromJsonTimestamp,
+          toJson: _toJsonTimestamp,
+          includeIfNull: false)
       this.birthday,
       this.gender,
       this.phone,
@@ -245,12 +261,16 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String? surname;
   @override
-  final String? nickname;
+  final String? patronymic;
   @override
   final String? avatar;
   @override
   final String? email;
   @override
+  @JsonKey(
+      fromJson: _fromJsonTimestamp,
+      toJson: _toJsonTimestamp,
+      includeIfNull: false)
   final DateTime? birthday;
   @override
   final String? gender;
@@ -261,7 +281,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, surname: $surname, nickname: $nickname, avatar: $avatar, email: $email, birthday: $birthday, gender: $gender, phone: $phone, address: $address)';
+    return 'UserModel(id: $id, name: $name, surname: $surname, patronymic: $patronymic, avatar: $avatar, email: $email, birthday: $birthday, gender: $gender, phone: $phone, address: $address)';
   }
 
   @override
@@ -272,8 +292,8 @@ class _$UserModelImpl implements _UserModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.surname, surname) || other.surname == surname) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
+            (identical(other.patronymic, patronymic) ||
+                other.patronymic == patronymic) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.birthday, birthday) ||
@@ -285,7 +305,7 @@ class _$UserModelImpl implements _UserModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, surname, nickname,
+  int get hashCode => Object.hash(runtimeType, id, name, surname, patronymic,
       avatar, email, birthday, gender, phone, address);
 
   /// Create a copy of UserModel
@@ -309,9 +329,13 @@ abstract class _UserModel implements UserModel {
       {final String? id,
       final String? name,
       final String? surname,
-      final String? nickname,
+      final String? patronymic,
       final String? avatar,
       final String? email,
+      @JsonKey(
+          fromJson: _fromJsonTimestamp,
+          toJson: _toJsonTimestamp,
+          includeIfNull: false)
       final DateTime? birthday,
       final String? gender,
       final String? phone,
@@ -327,12 +351,16 @@ abstract class _UserModel implements UserModel {
   @override
   String? get surname;
   @override
-  String? get nickname;
+  String? get patronymic;
   @override
   String? get avatar;
   @override
   String? get email;
   @override
+  @JsonKey(
+      fromJson: _fromJsonTimestamp,
+      toJson: _toJsonTimestamp,
+      includeIfNull: false)
   DateTime? get birthday;
   @override
   String? get gender;

@@ -11,14 +11,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum AuthState {
   authentication,
   registration,
-  code,
+  linkSended,
   success,
   recoveryPassword;
 
   T map<T>({
     required T Function() authentication,
     required T Function() registration,
-    required T Function() code,
+    required T Function() linkSended,
     required T Function() recoveryPassword,
     required T Function() success,
   }) {
@@ -27,8 +27,8 @@ enum AuthState {
         return authentication();
       case AuthState.registration:
         return registration();
-      case AuthState.code:
-        return code();
+      case AuthState.linkSended:
+        return linkSended();
       case AuthState.recoveryPassword:
         return recoveryPassword();
       case AuthState.success:
@@ -40,14 +40,14 @@ enum AuthState {
     required T Function() orElse,
     T Function()? authentication,
     T Function()? registration,
-    T Function()? code,
+    T Function()? linkSended,
     T Function()? recoveryPassword,
     T Function()? success,
   }) =>
       map<T>(
         authentication: authentication ?? orElse,
         registration: registration ?? orElse,
-        code: code ?? orElse,
+        linkSended: linkSended ?? orElse,
         recoveryPassword: recoveryPassword ?? orElse,
         success: success ?? orElse,
       );
@@ -135,11 +135,34 @@ final class AuthModel extends BaseModel {
   Future<void> login() async {
     _state.loading();
     try {
-      final credential = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: _emailTextController.text,
         password: _passwordTextController.text,
       );
-      print('TOKEN: ${credential.credential?.token}');
+      firebaseAuth.authStateChanges().listen((User? value) async {
+        if (value != null && value.emailVerified) {
+          await value.getIdToken().then((value) async {
+            if (value != null) {
+              print('TOKEN: $value');
+
+              await appScope.tokenStorage
+                  .write(
+                AuthTokenPair(
+                  accessToken: value,
+                ),
+              )
+                  .then((_) {
+                _authState.content(AuthState.success);
+              });
+            }
+          });
+        } else {
+          showMessage(
+            message: 'Электронный адрес не подтверждён',
+            type: PageState.error,
+          );
+        }
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -151,7 +174,7 @@ final class AuthModel extends BaseModel {
   }
 
   Future<void> registration() async {
-    _state.loading();
+    _authState.loading(_authState.value.data);
     try {
       if ((_nameFormKey.currentState?.validate() ?? false) &&
           (_emailFormKey.currentState?.validate() ?? false) &&
@@ -167,18 +190,28 @@ final class AuthModel extends BaseModel {
             email: _emailTextController.text,
             password: _passwordTextController.text,
           );
-          if (response.credential != null) {
-            credential = response.credential;
-            await firebaseAuth.currentUser!.updateDisplayName(_nameTextController.text).then((_) async {
-              final user = firebaseAuth.currentUser;
-              if (user != null) {
-                await user.sendEmailVerification().then((_) {
-                  print('USER_ID: ${user.uid}');
-                  _authState.content(AuthState.code);
+          credential = response.credential;
+          await firebaseAuth.currentUser!.updateDisplayName(_nameTextController.text).then((_) async {
+            final user = firebaseAuth.currentUser;
+            if (user != null) {
+              UserModel data = UserModel(
+                name: user.displayName,
+                email: user.email,
+                phone: user.phoneNumber,
+              );
+              final ref = db.collection("users");
+              final map = data.toJson();
+              ref.add(map).then((doc) async {
+                map["id"] = doc.id;
+                doc.update(map).then((_) async {
+                  await firebaseAuth.setLanguageCode('ru');
+                  await user.sendEmailVerification().then((_) {
+                    _authState.content(AuthState.linkSended);
+                  });
                 });
-              }
-            });
-          }
+              });
+            }
+          });
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -199,38 +232,13 @@ final class AuthModel extends BaseModel {
     _state.content(false);
   }
 
-  Future<void> confirmCode() async {
-    try {
-      print('CONFIRM_CODE: ${_codeTextController.text}');
-      await firebaseAuth.applyActionCode(_codeTextController.text).then((value) {
-        print('ACCESS_TOKEN: ${credential?.accessToken}');
-        if (credential?.accessToken != null) {
-          appScope.tokenStorage.write(
-            AuthTokenPair(
-              accessToken: credential!.accessToken!,
-            ),
-          );
-          _authState.content(AuthState.success);
-        }
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'expired-action-code') {
-        _authState.failure(
-          Exception('Истек срок действия кода.'),
-          _authState.value.data,
-        );
-      } else if (e.code == 'invalid-action-code') {
-        _authState.failure(
-          Exception('Код не действителен.'),
-          _authState.value.data,
-        );
-      }
-    }
-  }
-
   Future<void> getCurrentUser() async {
     _state.loading();
 
     _state.content(false);
+  }
+
+  void changeAuthState(AuthState state) {
+    _authState.content(state);
   }
 }

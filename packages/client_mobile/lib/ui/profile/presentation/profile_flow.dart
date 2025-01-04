@@ -14,13 +14,7 @@ class ProfileFlow extends StatelessWidget {
     return DiScope<IProfileScope>(
       factory: ProfileScope.create,
       onDispose: (scope) => scope.dispose(),
-      child: const AppScaffold(
-        appBar: CustomAppBar(
-          title: 'Аудио',
-          showBackButton: false,
-        ),
-        child:  ProfileScreen(),
-      ),
+      child: const ProfileScreen(),
     );
   }
 }

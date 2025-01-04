@@ -12,7 +12,6 @@ import 'profile_screen.dart';
 /// DI factory for [ProfileWM].
 ProfileWM defaultAudioWMFactory(BuildContext context) {
   final appScope = context.read<IAppScope>();
-  final scope = context.read<IAudioScope>();
 
   return ProfileWM(
     ProfileModel(
@@ -22,7 +21,13 @@ ProfileWM defaultAudioWMFactory(BuildContext context) {
 }
 
 /// Interface for [ProfileWM].
-abstract interface class IProfileWM implements IWidgetModel {}
+abstract interface class IProfileWM implements IWidgetModel {
+  UnionStateNotifier<UserModel?> get user;
+
+  void changeProfileState(ProfileState state);
+
+  void editAvatar();
+}
 
 /// {@template feature_example_wm.class}
 /// [WidgetModel] for [FeatureExampleScreen].
@@ -32,7 +37,25 @@ final class ProfileWM extends WidgetModel<ProfileScreen, ProfileModel> implement
   ProfileWM(super._model);
 
   @override
-  void initWidgetModel() {
+  void initWidgetModel() async {
+    await model.getCurrentUser();
     super.initWidgetModel();
+  }
+
+  @override
+  UnionStateNotifier<UserModel?> get user => model.user;
+
+  @override
+  void changeProfileState(ProfileState state) {
+    model.changeProfileState(state);
+  }
+
+  @override
+  void editAvatar() async {
+    await getImage().then((image) {
+      if (image != null) {
+        model.editAvatar(image);
+      }
+    });
   }
 }

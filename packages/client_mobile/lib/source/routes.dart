@@ -4,6 +4,8 @@ import 'package:client_mobile/ui/audio/presentation/audio_flow.dart';
 import 'package:client_mobile/ui/audio_detail/audio_detail_screen.dart';
 import 'package:client_mobile/ui/auth/presentation/auth_flow.dart';
 import 'package:client_mobile/ui/catalog/catalog_screen.dart';
+import 'package:client_mobile/ui/profile/presentation/profile_flow.dart';
+import 'package:client_mobile/ui/profile/presentation/profile_screen.dart';
 import 'package:client_mobile/ui/video/video_screen.dart';
 import 'package:shared/imports.dart';
 
@@ -80,14 +82,14 @@ class AppRouter {
           child: const AuthFlow(),
         ),
       ),
-      // GoRoute(
-      //   name: Pages.profile,
-      //   path: '/${Pages.profile}',
-      //   pageBuilder: (_, state) => _pageWrapper(
-      //     state,
-      //     child: const ProfileScreen(),
-      //   ),
-      // ),
+      GoRoute(
+        name: Pages.profile,
+        path: '/${Pages.profile}',
+        pageBuilder: (_, state) => _pageWrapper(
+          state,
+          child: const ProfileFlow(),
+        ),
+      ),
     ],
     redirect: (context, state) async {
       final notificationData = Preferences.getStringByKey('notificationData') ?? '';

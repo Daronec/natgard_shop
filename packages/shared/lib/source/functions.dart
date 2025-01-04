@@ -42,7 +42,7 @@ void showMessage({
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
-    gravity: kIsWeb ? ToastGravity.TOP_RIGHT : ToastGravity.BOTTOM,
+    gravity: kIsWeb ? ToastGravity.TOP_RIGHT : ToastGravity.TOP,
     timeInSecForIosWeb: 3,
     backgroundColor: getMessageColor(type),
     textColor: Colors.white,

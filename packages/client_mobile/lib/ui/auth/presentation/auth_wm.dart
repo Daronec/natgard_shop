@@ -56,9 +56,9 @@ abstract interface class IAuthWM implements IWidgetModel {
 
   Future<void> registration();
 
-  Future<void> confirmCode();
-
   void goToHome();
+
+  void changeAuthState(AuthState state);
 }
 
 /// {@template feature_example_wm.class}
@@ -105,11 +105,6 @@ final class AuthWM extends WidgetModel<AuthScreen, AuthModel> implements IAuthWM
   }
 
   @override
-  Future<void> confirmCode() async {
-    model.confirmCode();
-  }
-
-  @override
   GlobalKey<FormState> get confirmPasswordFormKey => model.confirmPasswordFormKey;
 
   @override
@@ -133,5 +128,10 @@ final class AuthWM extends WidgetModel<AuthScreen, AuthModel> implements IAuthWM
   @override
   void goToHome() {
     context.pushNamed(Pages.catalog);
+  }
+
+  @override
+  void changeAuthState(AuthState state) {
+    model.changeAuthState(state);
   }
 }
