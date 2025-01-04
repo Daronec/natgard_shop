@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311992519988",
+    "project_id": "natgard-shop",
+    "storage_bucket": "natgard-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311992519988:android:e3666057f1c1b27c6da961",
+        "android_client_info": {
+          "package_name": "ru.natgard.natgard_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU_a9cgoU6kiZ0RfS6K1ymhxzsAeQEMzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

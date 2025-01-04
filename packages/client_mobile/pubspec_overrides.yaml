@@ -1,0 +1,9 @@
+# melos_managed_dependency_overrides: shared
+dependency_overrides:
+  client_web:
+    path: ../client_web
+  admin_web:
+    path: ../admin_web
+  shared:
+    path: ..\\shared
+

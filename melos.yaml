@@ -1,0 +1,45 @@
+name: natgard_shop
+
+dev_dependencies:
+  melos: any
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+    usePubspecOverrides: true
+
+scripts:
+  format:
+    run: |
+      dart pub global run flutter_plugin_tools format && \
+      swiftformat .
+    description: |
+      Build a specific example app for Android.
+       - Requires `flutter_plugin_tools` (`dart pub global activate flutter_plugin_tools`).
+       - Requires `clang-format` (can be installed via Brew on macOS).
+       - Requires `swiftformat` (can be installed via Brew on macOS).
+
+  formatting:check: melos exec -- dart format --set-exit-if-changed .
+
+  analyze: melos exec -- dart analyze --fatal-infos
+
+  run:admin_web:
+    run: melos exec -- flutter run lib/main.dart
+    select-package:
+      scope: 'admin_web'
+
+  run:client_web:
+      run: melos exec -- flutter run lib/main.dart
+      select-package:
+        scope: 'client_web'
+
+  run:client_mobile:
+    run: melos exec -- flutter run lib/main.dart
+    select-package:
+      scope: 'client_mobile'
