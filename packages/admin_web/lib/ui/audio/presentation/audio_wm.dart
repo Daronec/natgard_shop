@@ -5,7 +5,6 @@ import 'package:admin_web/ui/audio/di/audio_scope.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared/data/models/video_model/video_model.dart';
 import 'package:shared/imports.dart';
 import 'package:union_state/union_state.dart';
 

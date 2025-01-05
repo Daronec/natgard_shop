@@ -29,8 +29,11 @@ class UsersScreen extends ElementaryWidget<IUsersWM> {
               children: [
                 const Row(
                   children: [
+                    const SizedBox(
+                      width: 40,
+                    ),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Text(
                         'ФИО',
                       ),

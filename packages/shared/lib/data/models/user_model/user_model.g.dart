@@ -18,6 +18,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       gender: json['gender'] as String?,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
+      isAdmin: json['isAdmin'] as bool?,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) {
@@ -40,5 +41,6 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) {
   val['gender'] = instance.gender;
   val['phone'] = instance.phone;
   val['address'] = instance.address;
+  val['isAdmin'] = instance.isAdmin;
   return val;
 }

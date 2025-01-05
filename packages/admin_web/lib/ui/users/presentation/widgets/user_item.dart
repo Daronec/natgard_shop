@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/data/models/user_model/user_model.dart';
+import 'package:shared/imports.dart';
 
 class UserItem extends StatelessWidget {
   const UserItem({
@@ -24,9 +25,16 @@ class UserItem extends StatelessWidget {
       ),
       child: Row(
         children: [
+          AppAvatar(
+            borderWith: 1,
+            imageId: user.avatar ?? '',
+          ),
+          const SizedBox(
+            width: 10,
+          ),
           Expanded(
-            flex: 3,
-            child: Text('${user.name} ${user.patronymic} ${user.surname}'),
+            flex: 2,
+            child: Text('${user.name ?? ''} ${user.patronymic ?? ''} ${user.surname ?? ''}'),
           ),
           Expanded(
             flex: 1,

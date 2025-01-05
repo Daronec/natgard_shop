@@ -8,15 +8,14 @@ class AppScaffoldViewModel extends ChangeNotifier {
   ) {
     final GoRouter route = GoRouter.of(context);
     final RouteMatch lastMatch = route.routerDelegate.currentConfiguration.last;
-    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
-        ? lastMatch.matches
-        : route.routerDelegate.currentConfiguration;
+    final RouteMatchList matchList =
+        lastMatch is ImperativeRouteMatch ? lastMatch.matches : route.routerDelegate.currentConfiguration;
     final String location = matchList.uri.toString().replaceAll('/', '');
     int index = 0;
-    if (location.startsWith(Pages.users)) {
+    if (location.startsWith(Pages.users.name)) {
       index = 0;
     }
-    if (location.startsWith(Pages.audio) ) {
+    if (location.startsWith(Pages.audio.name)) {
       index = 1;
     }
 
@@ -31,10 +30,10 @@ class AppScaffoldViewModel extends ChangeNotifier {
   ) {
     switch (index) {
       case 0:
-        context.pushNamed(Pages.users);
+        context.pushNamed(token != null ? Pages.users.value : Pages.auth.value);
         break;
       case 1:
-        context.pushNamed(Pages.audio);
+        context.pushNamed(token != null ? Pages.audio.value : Pages.auth.value);
         break;
     }
   }

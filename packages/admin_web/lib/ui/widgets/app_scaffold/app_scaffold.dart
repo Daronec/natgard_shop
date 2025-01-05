@@ -1,5 +1,7 @@
 import 'package:admin_web/source/routes.dart';
+import 'package:admin_web/ui/app/di/app_scope.dart';
 import 'package:admin_web/ui/widgets/app_scaffold/constants/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared/imports.dart';
 
 import 'app_scaffold_view_model.dart';
@@ -51,6 +53,7 @@ class _AppScaffoldState extends State<AppScaffold> {
         }
       });
     });
+    getToken(context);
     super.initState();
   }
 
@@ -72,9 +75,23 @@ class _AppScaffoldState extends State<AppScaffold> {
   }
 
   void getToken(BuildContext context) async {
-    // final appScope = context.read<IAppScope>();
-    // final tokens = await appScope.tokenStorage.read();
-    // token = tokens?.accessToken;
+    final appScope = context.read<IAppScope>();
+    final tokens = await appScope.tokenStorage.read();
+    token = tokens?.accessToken;
+  }
+
+  String getTitle(BuildContext) {
+    String title = '';
+    final GoRouter route = GoRouter.of(context);
+    final RouteMatch lastMatch = route.routerDelegate.currentConfiguration.last;
+    final String location = lastMatch.matchedLocation;
+    if (location == '/users') {
+      title = 'Пользователи';
+    }
+    if (location == '/') {
+      title = 'Аудио';
+    }
+    return title;
   }
 
   @override
@@ -82,6 +99,7 @@ class _AppScaffoldState extends State<AppScaffold> {
     final ThemeData theme = Theme.of(context);
     final viewModel = Provider.of<AppScaffoldViewModel>(context);
     getToken(context);
+    String title = getTitle(context);
     return SafeArea(
       top: widget.saveAreaTop,
       bottom: widget.saveAreaBottom,
@@ -130,7 +148,27 @@ class _AppScaffoldState extends State<AppScaffold> {
                 },
                 child: Icon(Icons.menu),
               ),
-              title: Text('Page'),
+              title: Text(title),
+              actions: [
+                if (token != null)
+                  AppButton(
+                    height: 30,
+                    width: 100,
+                    title: 'Выйти',
+                    color: theme.colorScheme.tertiaryContainer,
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut().then((_) async {
+                        final appScope = context.read<IAppScope>();
+                        await appScope.tokenStorage.delete().then((_) {
+                          context.pushNamed(Pages.auth.value);
+                        });
+                      });
+                    },
+                  ),
+                const SizedBox(
+                  width: 20,
+                ),
+              ],
             ),
         body: widget.child,
       ),

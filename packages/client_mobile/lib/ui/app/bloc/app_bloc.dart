@@ -32,9 +32,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(const _LoadingAppState());
       firebaseAuth = FirebaseAuth.instance;
       authRepo = _appScope.authRepository;
-      emit(const _LoadingAppState());
-      FirebaseAuth.instance.authStateChanges().listen((User? value) async {
-        print('USER: ${value?.uid}');
+      firebaseAuth.authStateChanges().listen((User? value) async {
         if (value != null) {
           await value.getIdToken().then((value) async {
             if (value != null) {

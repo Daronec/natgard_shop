@@ -34,6 +34,7 @@ mixin _$UserModel {
   String? get gender => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
+  bool? get isAdmin => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -64,7 +65,8 @@ abstract class $UserModelCopyWith<$Res> {
       DateTime? birthday,
       String? gender,
       String? phone,
-      String? address});
+      String? address,
+      bool? isAdmin});
 }
 
 /// @nodoc
@@ -92,6 +94,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? gender = freezed,
     Object? phone = freezed,
     Object? address = freezed,
+    Object? isAdmin = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -134,6 +137,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      isAdmin: freezed == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -160,7 +167,8 @@ abstract class _$$UserModelImplCopyWith<$Res>
       DateTime? birthday,
       String? gender,
       String? phone,
-      String? address});
+      String? address,
+      bool? isAdmin});
 }
 
 /// @nodoc
@@ -186,6 +194,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? gender = freezed,
     Object? phone = freezed,
     Object? address = freezed,
+    Object? isAdmin = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: freezed == id
@@ -228,6 +237,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
+      isAdmin: freezed == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -249,7 +262,8 @@ class _$UserModelImpl implements _UserModel {
       this.birthday,
       this.gender,
       this.phone,
-      this.address});
+      this.address,
+      this.isAdmin});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -278,10 +292,12 @@ class _$UserModelImpl implements _UserModel {
   final String? phone;
   @override
   final String? address;
+  @override
+  final bool? isAdmin;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, surname: $surname, patronymic: $patronymic, avatar: $avatar, email: $email, birthday: $birthday, gender: $gender, phone: $phone, address: $address)';
+    return 'UserModel(id: $id, name: $name, surname: $surname, patronymic: $patronymic, avatar: $avatar, email: $email, birthday: $birthday, gender: $gender, phone: $phone, address: $address, isAdmin: $isAdmin)';
   }
 
   @override
@@ -300,13 +316,14 @@ class _$UserModelImpl implements _UserModel {
                 other.birthday == birthday) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.address, address) || other.address == address));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, surname, patronymic,
-      avatar, email, birthday, gender, phone, address);
+      avatar, email, birthday, gender, phone, address, isAdmin);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -339,7 +356,8 @@ abstract class _UserModel implements UserModel {
       final DateTime? birthday,
       final String? gender,
       final String? phone,
-      final String? address}) = _$UserModelImpl;
+      final String? address,
+      final bool? isAdmin}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -368,6 +386,8 @@ abstract class _UserModel implements UserModel {
   String? get phone;
   @override
   String? get address;
+  @override
+  bool? get isAdmin;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

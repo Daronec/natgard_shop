@@ -4,10 +4,11 @@ class AppAvatar extends StatelessWidget {
   const AppAvatar({
     Key? key,
     required this.imageId,
-    this.size = 38,
+    this.size = 30,
     this.onTap,
     this.errorWidget,
     this.tag,
+    this.borderWith,
   }) : super(key: key);
 
   final String imageId;
@@ -15,6 +16,7 @@ class AppAvatar extends StatelessWidget {
   final Function()? onTap;
   final Widget? errorWidget;
   final String? tag;
+  final double? borderWith;
 
   static void showAvatar({
     required BuildContext context,
@@ -177,7 +179,7 @@ class AppAvatar extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.grey,
             border: Border.all(
-              width: 2,
+              width: borderWith ?? 2,
               color: AppColors.darkGrey,
             ),
             borderRadius: BorderRadius.circular(size / 2),

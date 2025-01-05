@@ -19,6 +19,7 @@ dependencies:
   flutter_file_uploader: ^1.3.0
   dart_thread: ^0.0.12
   youtube_player_flutter: ^9.1.1
+  firebase_auth: ^5.3.4
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:admin_web/ui/app/di/app_scope.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared/imports.dart';
 
 part 'app_event.dart';
@@ -22,6 +23,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late BuildContext context;
   late IAuthRepository authRepo;
   late final IAppScope _appScope;
+  late FirebaseAuth firebaseAuth;
 
   void _onInitialEvent(
     _InitialEvent event,
@@ -29,30 +31,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     try {
       emit(const _LoadingAppState());
+      firebaseAuth = FirebaseAuth.instance;
       authRepo = _appScope.authRepository;
-      emit(const _LoadingAppState());
-      // final tokens = await _appScope.tokenStorage.read();
-      // user = const UserModel(
-      //   googleId: '0987654321',
-      //   typeOs: 'ANDROID',
-      //   secret: secretKey,
-      // );
-      // await authRepo.register(user: user!).then((_) async {
-      //   await authRepo.getCurrentUser().then((value) async {
-      //     user = value;
-      //
-      //     final firebaseToken = Preferences.loadFirebaseToken();
-      //     if (firebaseToken != null) {
-      //       // user = value.copyWith(
-      //       //   firebaseToken: firebaseToken,
-      //       //   typeOs: defaultTargetPlatform == TargetPlatform.android
-      //       //       ? 'ANDROID'
-      //       //       : 'IOS',
-      //       // );
-      //       await authRepo.editUser(user!);
-      //     }
-      //   });
-      // });
+      firebaseAuth.authStateChanges().listen((User? value) async {
+        print('USER: ${value?.uid}');
+        if (value != null) {
+          await value.getIdToken().then((value) async {
+            if (value != null) {
+              await _appScope.tokenStorage.write(AuthTokenPair(
+                accessToken: value,
+              ));
+            }
+          });
+        }
+      });
       emit(const _DataAppState());
     } on DioException catch (err) {
       if ((err.response?.statusCode ?? 0) > 500) {
@@ -62,8 +54,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             pageState: PageState.error,
           ),
         );
-      } else if (err.response?.statusCode != 401 &&
-          err.response?.statusCode != 403) {
+      } else if (err.response?.statusCode != 401 && err.response?.statusCode != 403) {
         emit(
           _InfoAppState(
             message: err.response?.data["message"].toString() ?? '',

@@ -1,4 +1,3 @@
-import 'package:admin_web/ui/app/di/app_scope.dart';
 import 'package:shared/imports.dart';
 import 'package:shared/source/disposable_object/i_disposable_object.dart';
 
@@ -13,8 +12,6 @@ final class AudioScope extends DisposableObject implements IAudioScope {
 
   /// Factory constructor for [IAudioScope].
   factory AudioScope.create(BuildContext context) {
-    final appScope = context.read<IAppScope>();
-
     return AudioScope(
       cloudRepository: CloudBaseRepository(),
       storageRepository: FirebaseStorageRepository(),
