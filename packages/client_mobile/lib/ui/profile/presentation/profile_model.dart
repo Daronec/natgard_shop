@@ -92,7 +92,15 @@ final class ProfileModel extends BaseModel {
             for (var item in doc.docs) {
               final map = item.data();
               if (authUser.email == map["email"]) {
-                _user.content(UserModel.fromJson(map));
+                final user = UserModel.fromJson(map);
+                nameTextController.text = user.name ?? '';
+                patronymicTextController.text = user.patronymic ?? '';
+                surnameTextController.text = user.surname ?? '';
+                phoneTextController.text = user.phone ?? '';
+                emailTextController.text = user.email ?? '';
+                addressTextController.text = user.address ?? '';
+                birthdayTextController.text = user.birthday?.formatNumberDate ?? '';
+                _user.content(user);
               }
             }
           }
@@ -102,8 +110,8 @@ final class ProfileModel extends BaseModel {
     }
   }
 
-  void changeProfileState(ProfileState state) {
-    _profileState.content(state);
+  void changeProfileState() {
+    _profileState.content(_profileState.value.data == ProfileState.edit ? ProfileState.view : ProfileState.edit);
   }
 
   void editAvatar(XFile file) async {
@@ -143,5 +151,29 @@ final class ProfileModel extends BaseModel {
         );
       });
     });
+  }
+
+  Future<void> editUser() async {
+    _user.loading(_user.value.data);
+    UserModel? user = _user.value.data;
+    if (user != null) {
+      user = user.copyWith(
+        name: _nameTextController.text,
+        patronymic: _patronymicTextController.text,
+        surname: _surnameTextController.text,
+        phone: _phoneTextController.text,
+        email: _emailTextController.text,
+        birthday: _birthdayTextController.text.formatDateToDate,
+        address: _addressTextController.text,
+      );
+      final ref = db.collection("users").doc(user.id);
+      await ref.update(user.toJson()).then(
+        (doc) {
+          _user.content(user);
+          _profileState.content(ProfileState.view);
+        },
+        onError: (err) => debugPrint('Documents: $err'),
+      );
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:admin_web/ui/audio/presentation/audio_flow.dart';
 import 'package:admin_web/ui/audio/presentation/audio_screen.dart';
 import 'package:admin_web/ui/home/home_screen.dart';
+import 'package:admin_web/ui/users/presentation/users_flow.dart';
 import 'package:admin_web/ui/widgets/app_scaffold/app_scaffold.dart';
 import 'package:admin_web/ui/youtube/presentation/youtube_flow.dart';
 import 'package:client_mobile/ui/catalog/catalog_screen.dart';
@@ -11,12 +12,12 @@ import 'package:shared/imports.dart';
 
 class Pages {
   static const String auth = 'auth';
-  static const String home = '/';
   static const String user = 'user';
+  static const String users = 'users';
   static const String catalog = 'catalog';
   static const String video = 'video';
   static const String videos = 'videos';
-  static const String audio = 'audio';
+  static const String audio = '/';
 }
 
 class AppRouter {
@@ -24,13 +25,11 @@ class AppRouter {
 
   AppRouter();
 
-  final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'root');
-  final GlobalKey<NavigatorState> _shellNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shell');
+  final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+  final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 
   String getInitialRoute() {
-    String path = Pages.home;
+    String path = Pages.audio;
     final page = Preferences.getStringByKey('page');
     Preferences.removeKey('page');
     if (page != null) {
@@ -53,14 +52,7 @@ class AppRouter {
           return AppScaffold(child: child);
         },
         routes: <RouteBase>[
-          GoRoute(
-            name: Pages.home,
-            path: Pages.home,
-            pageBuilder: (_, state) => _pageWrapper(
-              state,
-              child: const HomeScreen(),
-            ),
-          ),
+
           GoRoute(
             name: Pages.catalog,
             path: '/${Pages.catalog}',
@@ -87,24 +79,29 @@ class AppRouter {
           ),
           GoRoute(
             name: Pages.audio,
-            path: '/${Pages.audio}',
+            path: Pages.audio,
             pageBuilder: (_, state) => _pageWrapper(
               state,
               child: const AudioFlow(),
+            ),
+          ),
+          GoRoute(
+            name: Pages.users,
+            path: '/${Pages.users}',
+            pageBuilder: (_, state) => _pageWrapper(
+              state,
+              child: const UsersFlow(),
             ),
           ),
         ],
       ),
     ],
     redirect: (context, state) async {
-      final notificationData =
-          Preferences.getStringByKey('notificationData') ?? '';
-      final page = (notificationData.isNotEmpty &&
-              notificationData.contains('page'))
+      final notificationData = Preferences.getStringByKey('notificationData') ?? '';
+      final page = (notificationData.isNotEmpty && notificationData.contains('page'))
           ? jsonDecode(Preferences.getStringByKey('notificationData')!)['page']
           : null;
-      final id = (notificationData.isNotEmpty &&
-              notificationData.contains('id'))
+      final id = (notificationData.isNotEmpty && notificationData.contains('id'))
           ? jsonDecode(Preferences.getStringByKey('notificationData')!)['id']
           : null;
       Preferences.removeKey('page');
@@ -153,14 +150,9 @@ CustomTransitionPage _sliderPageWrapper(state, {required Widget child}) {
     reverseTransitionDuration: const Duration(milliseconds: 400),
     transitionDuration: const Duration(milliseconds: 1000),
     transitionsBuilder: (_, a, __, c) {
-      a = CurvedAnimation(
-          curve: Curves.fastLinearToSlowEaseIn,
-          parent: a,
-          reverseCurve: Curves.fastOutSlowIn);
+      a = CurvedAnimation(curve: Curves.fastLinearToSlowEaseIn, parent: a, reverseCurve: Curves.fastOutSlowIn);
       return SlideTransition(
-        position:
-            Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
-                .animate(a),
+        position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(a),
         child: c,
       );
     },
@@ -177,14 +169,9 @@ class SliderTransition extends PageRouteBuilder {
           reverseTransitionDuration: const Duration(milliseconds: 400),
           transitionsBuilder: (context, animation, anotherAnimation, child) {
             animation = CurvedAnimation(
-                curve: Curves.fastLinearToSlowEaseIn,
-                parent: animation,
-                reverseCurve: Curves.fastOutSlowIn);
+                curve: Curves.fastLinearToSlowEaseIn, parent: animation, reverseCurve: Curves.fastOutSlowIn);
             return SlideTransition(
-              position: Tween(
-                      begin: const Offset(1.0, 0.0),
-                      end: const Offset(0.0, 0.0))
-                  .animate(animation),
+              position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(animation),
               child: page,
             );
           },

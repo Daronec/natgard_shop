@@ -1,4 +1,5 @@
 import 'package:client_mobile/ui/profile/presentation/profile_model.dart';
+import 'package:client_mobile/ui/profile/presentation/widgets/edit_profile_body.dart';
 import 'package:client_mobile/ui/profile/presentation/widgets/profile_body.dart';
 import 'package:client_mobile/ui/widgets/app_scaffold/app_scaffold.dart';
 import 'package:elementary/elementary.dart';
@@ -24,9 +25,7 @@ class ProfileScreen extends ElementaryWidget<IProfileWM> {
         showBackButton: false,
         actions: [
           IconButton(
-            onPressed: () {
-              wm.changeProfileState(ProfileState.edit);
-            },
+            onPressed: () => wm.changeProfileState(),
             icon: const Icon(
               Icons.edit,
             ),
@@ -34,25 +33,41 @@ class ProfileScreen extends ElementaryWidget<IProfileWM> {
         ],
       ),
       child: UnionStateListenableBuilder(
-        unionStateListenable: wm.user,
-        loadingBuilder: (_, data) => Stack(
-          children: [
-            if (data != null)
-              ProfileBody(
-                user: data,
-                wm: wm,
+          unionStateListenable: wm.profileState,
+          loadingBuilder: (_, profileState) => const SizedBox(),
+          failureBuilder: (_, ex, ___) => Text(
+                ex.toString(),
               ),
-            const CircularProgressIndicatorWidget(),
-          ],
-        ),
-        failureBuilder: (_, ex, ___) => Text(
-          ex.toString(),
-        ),
-        builder: (_, user) => ProfileBody(
-          user: user,
-          wm: wm,
-        ),
-      ),
+          builder: (context, profileState) {
+            return UnionStateListenableBuilder(
+              unionStateListenable: wm.user,
+              loadingBuilder: (_, data) => Stack(
+                children: [
+                  if (data != null || profileState != null)
+                    profileState!.maybeMap(
+                      orElse: () => const SizedBox(),
+                      view: () => ProfileBody(
+                        user: data,
+                        wm: wm,
+                      ),
+                      edit: () => EditProfileBody(wm: wm),
+                    ),
+                  const CircularProgressIndicatorWidget(),
+                ],
+              ),
+              failureBuilder: (_, ex, ___) => Text(
+                ex.toString(),
+              ),
+              builder: (_, user) => profileState!.maybeMap(
+                orElse: () => const SizedBox(),
+                view: () => ProfileBody(
+                  user: user,
+                  wm: wm,
+                ),
+                edit: () => EditProfileBody(wm: wm),
+              ),
+            );
+          }),
     );
   }
 }

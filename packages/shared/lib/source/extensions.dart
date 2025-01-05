@@ -1,4 +1,3 @@
-
 import 'package:intl/intl.dart';
 import 'package:shared/imports.dart';
 
@@ -10,9 +9,7 @@ extension NumberEnding on int {
   String numEnding(titles) {
     String str = '';
     final cases = [2, 0, 1, 1, 1, 2];
-    str = titles[(this % 100 > 4 && this % 100 < 20)
-        ? 2
-        : cases[(this % 10 < 5) ? this % 10 : 5]];
+    str = titles[(this % 100 > 4 && this % 100 < 20) ? 2 : cases[(this % 10 < 5) ? this % 10 : 5]];
     return str;
   }
 }
@@ -32,7 +29,6 @@ extension StringExtension on DateTime {
     String dateFormat = DateFormat("dd/MM/yyyy в HH:mm", 'ru').format(this);
     return dateFormat;
   }
-
 
   String get chatTestFormatDate {
     String dateFormat = DateFormat("dd/MM/yyyy в HH:mm:ss", 'ru').format(this);
@@ -54,8 +50,7 @@ extension StringExtension on DateTime {
     return dateFormat;
   }
 
-  String get sendFormat =>
-      '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
+  String get sendFormat => '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
 
   String get getTime {
     final dateString = toIso8601String();
@@ -82,14 +77,9 @@ extension StringExtension on DateTime {
 
 extension DateTimeExtension on String {
   DateTime get formatDateToDate {
-    DateFormat dateFormat = DateFormat("dd.MM.yyyy");
-    DateTime date = dateFormat.parse(this);
+    List<String> value = split('.');
+    DateTime date = DateTime(int.parse(value[2]), int.parse(value[1]), int.parse(value[0]));
     return date;
-  }
-
-  DateTime get formatDate2 {
-    DateFormat dateFormat = DateFormat("dd-MM-yyyy");
-    return dateFormat.parse(this);
   }
 
   DateTime get formatTimeDate {
@@ -140,4 +130,3 @@ extension GlobalPaintBounds on BuildContext {
     }
   }
 }
-

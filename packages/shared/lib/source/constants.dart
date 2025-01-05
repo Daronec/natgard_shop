@@ -64,6 +64,7 @@ enum IconsType {
   catalog,
   audio,
   profile,
+  users,
 }
 
 enum AuthBodyType {

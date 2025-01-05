@@ -1,9 +1,7 @@
 import 'package:admin_web/ui/audio/presentation/widgets/add_audio_dialog.dart';
 import 'package:admin_web/ui/audio/presentation/widgets/audio_list.dart';
 import 'package:elementary/elementary.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:shared/imports.dart';
-import 'package:shared/widgets/in_memory_restorable_chunked_file_uploader_handler.dart';
 import 'audio_wm.dart';
 
 /// {@template feature_example_screen.class}
@@ -18,102 +16,104 @@ class AudioScreen extends ElementaryWidget<IAudioWM> {
 
   @override
   Widget build(IAudioWM wm) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          Column(
-            children: [
-              _HeaderWidget(
-                onAdd: (audioDto) async {
-                  await wm.addAudio(audioDto);
-                },
-                wm: wm,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: UnionStateListenableBuilder(
-                  unionStateListenable: wm.audio,
-                  loadingBuilder: (_, data) => data != null && data.isNotEmpty
-                      ? AudioList(
-                          wm: wm,
-                          audio: data,
-                          deleteAudio: (value) {
-                            wm.deleteAudio(value);
-                          },
-                        )
-                      : const Padding(
-                          padding: EdgeInsets.all(30),
-                          child: CircularProgressIndicatorWidget(),
-                        ),
-                  failureBuilder: (_, ex, ___) => Text(
-                    ex.toString(),
-                  ),
-                  builder: (_, data) => AudioList(
-                    wm: wm,
-                    audio: data,
-                    deleteAudio: (value) {
-                      wm.deleteAudio(value);
-                    },
-                  ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            Column(
+              children: [
+                _HeaderWidget(
+                  onAdd: (audioDto) async {
+                    await wm.addAudio(audioDto);
+                  },
+                  wm: wm,
                 ),
-              ),
-            ],
-          ),
-          UnionStateListenableBuilder(
-            unionStateListenable: wm.audioUploaded,
-            loadingBuilder: (_, __) => const Padding(
-              padding: EdgeInsets.all(30),
-              child: CircularProgressIndicatorWidget(),
-            ),
-            failureBuilder: (_, ex, ___) => Text(
-              ex.toString(),
-            ),
-            builder: (_, audioUploaded) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ...List.generate(
-                    audioUploaded.length,
-                    (index) {
-                      return SizedBox(
-                        width: 200,
-                        child: ListTile(
-                          tileColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(
-                              width: 1,
-                              color: AppColors.darkGrey,
-                            ),
-                          ),
-                          leading: const Icon(
-                            Icons.upload,
-                            color: AppColors.primary,
-                          ),
-                          title: Text(
-                            audioUploaded[index],
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          trailing: const SizedBox(
-                            height: 30,
-                            width: 30,
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: UnionStateListenableBuilder(
+                    unionStateListenable: wm.audio,
+                    loadingBuilder: (_, data) => data != null && data.isNotEmpty
+                        ? AudioList(
+                            wm: wm,
+                            audio: data,
+                            deleteAudio: (value) {
+                              wm.deleteAudio(value);
+                            },
+                          )
+                        : const Padding(
+                            padding: EdgeInsets.all(30),
                             child: CircularProgressIndicatorWidget(),
                           ),
-                        ),
-                      );
-                    },
+                    failureBuilder: (_, ex, ___) => Text(
+                      ex.toString(),
+                    ),
+                    builder: (_, data) => AudioList(
+                      wm: wm,
+                      audio: data,
+                      deleteAudio: (value) {
+                        wm.deleteAudio(value);
+                      },
+                    ),
                   ),
-                ],
-              );
-            },
-          ),
-        ],
+                ),
+              ],
+            ),
+            UnionStateListenableBuilder(
+              unionStateListenable: wm.audioUploaded,
+              loadingBuilder: (_, __) => const Padding(
+                padding: EdgeInsets.all(30),
+                child: CircularProgressIndicatorWidget(),
+              ),
+              failureBuilder: (_, ex, ___) => Text(
+                ex.toString(),
+              ),
+              builder: (_, audioUploaded) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...List.generate(
+                      audioUploaded.length,
+                      (index) {
+                        return SizedBox(
+                          width: 200,
+                          child: ListTile(
+                            tileColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(
+                                width: 1,
+                                color: AppColors.darkGrey,
+                              ),
+                            ),
+                            leading: const Icon(
+                              Icons.upload,
+                              color: AppColors.primary,
+                            ),
+                            title: Text(
+                              audioUploaded[index],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            trailing: const SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicatorWidget(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

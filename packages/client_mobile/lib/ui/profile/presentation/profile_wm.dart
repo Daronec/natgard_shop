@@ -24,9 +24,27 @@ ProfileWM defaultAudioWMFactory(BuildContext context) {
 abstract interface class IProfileWM implements IWidgetModel {
   UnionStateNotifier<UserModel?> get user;
 
-  void changeProfileState(ProfileState state);
+  UnionStateNotifier<ProfileState?> get profileState;
+
+  TextEditingController get phoneTextController;
+
+  TextEditingController get emailTextController;
+
+  TextEditingController get nameTextController;
+
+  TextEditingController get surnameTextController;
+
+  TextEditingController get patronymicTextController;
+
+  TextEditingController get addressTextController;
+
+  TextEditingController get birthdayTextController;
+
+  void changeProfileState();
 
   void editAvatar();
+
+  void editUser();
 }
 
 /// {@template feature_example_wm.class}
@@ -46,8 +64,8 @@ final class ProfileWM extends WidgetModel<ProfileScreen, ProfileModel> implement
   UnionStateNotifier<UserModel?> get user => model.user;
 
   @override
-  void changeProfileState(ProfileState state) {
-    model.changeProfileState(state);
+  void changeProfileState() {
+    model.changeProfileState();
   }
 
   @override
@@ -57,5 +75,34 @@ final class ProfileWM extends WidgetModel<ProfileScreen, ProfileModel> implement
         model.editAvatar(image);
       }
     });
+  }
+
+  @override
+  TextEditingController get addressTextController => model.addressTextController;
+
+  @override
+  TextEditingController get birthdayTextController => model.birthdayTextController;
+
+  @override
+  TextEditingController get emailTextController => model.emailTextController;
+
+  @override
+  TextEditingController get nameTextController => model.nameTextController;
+
+  @override
+  TextEditingController get patronymicTextController => model.patronymicTextController;
+
+  @override
+  TextEditingController get phoneTextController => model.phoneTextController;
+
+  @override
+  TextEditingController get surnameTextController => model.surnameTextController;
+
+  @override
+  UnionStateNotifier<ProfileState?> get profileState => model.profileState;
+
+  @override
+  void editUser() {
+    model.editUser();
   }
 }

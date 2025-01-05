@@ -13,10 +13,10 @@ class AppScaffoldViewModel extends ChangeNotifier {
         : route.routerDelegate.currentConfiguration;
     final String location = matchList.uri.toString().replaceAll('/', '');
     int index = 0;
-    if (location.startsWith(Pages.catalog)) {
+    if (location.startsWith(Pages.users)) {
       index = 0;
     }
-    if (location.startsWith(Pages.video) ) {
+    if (location.startsWith(Pages.audio) ) {
       index = 1;
     }
 
@@ -31,12 +31,9 @@ class AppScaffoldViewModel extends ChangeNotifier {
   ) {
     switch (index) {
       case 0:
-        context.pushNamed(Pages.home);
+        context.pushNamed(Pages.users);
         break;
       case 1:
-        context.pushNamed(Pages.videos);
-        break;
-      case 2:
         context.pushNamed(Pages.audio);
         break;
     }

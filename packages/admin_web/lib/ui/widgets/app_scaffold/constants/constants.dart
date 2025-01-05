@@ -17,6 +17,11 @@ Widget icons({
         Icons.video_library,
         color: active ? AppColors.primary : AppColors.grey,
       );
+    case IconsType.users:
+      return Icon(
+        Icons.supervised_user_circle_outlined,
+        color: active ? AppColors.primary : AppColors.grey,
+      );
     case IconsType.audio:
       return Icon(
         Icons.audiotrack,
@@ -31,12 +36,8 @@ Widget icons({
 List<NavbarEntity> navbarList() {
   return const [
     NavbarEntity(
-      label: 'Каталог',
-      icons: IconsType.catalog,
-    ),
-    NavbarEntity(
-      label: 'YouTube',
-      icons: IconsType.youtube,
+      label: 'Пользователи',
+      icons: IconsType.users,
     ),
     NavbarEntity(
       label: 'Аудио',

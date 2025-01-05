@@ -1,8 +1,8 @@
 import 'package:client_mobile/ui/profile/presentation/profile_wm.dart';
 import 'package:shared/imports.dart';
 
-class ProfileBody extends StatelessWidget {
-  const ProfileBody({
+class EditProfileBody extends StatelessWidget {
+  const EditProfileBody({
     super.key,
     this.user,
     required this.wm,
@@ -31,62 +31,52 @@ class ProfileBody extends StatelessWidget {
             height: 20,
             width: double.infinity,
           ),
-          lableText(
-            context: context,
-            title: 'ФИО',
-          ),
-          Text(
-            '${user?.name != null ? '${user?.name} ' : ''}'
-            '${user?.patronymic != null ? '${user?.patronymic} ' : ''}'
-            '${user?.surname ?? ''}',
-            style: theme.textTheme.bodyMedium,
+          AppTextField(
+            labelText: 'Имя',
+            hintText: 'Имя',
+            textController: wm.nameTextController,
           ),
           const SizedBox(
             height: 20,
           ),
-          lableText(
-            context: context,
-            title: 'Телефон',
-          ),
-          Text(
-            user?.phone ?? 'Не указан',
-            style: theme.textTheme.bodyMedium,
+          AppTextField(
+            labelText: 'Телефон',
+            hintText: 'Телефон',
+            textController: wm.phoneTextController,
           ),
           const SizedBox(
             height: 20,
           ),
-          lableText(
-            context: context,
-            title: 'Email',
-          ),
-          Text(
-            user?.email ?? 'Не указан',
-            style: theme.textTheme.bodyMedium,
+          AppTextField(
+            labelText: 'Email',
+            hintText: 'Email',
+            textController: wm.emailTextController,
           ),
           const SizedBox(
             height: 20,
           ),
-          lableText(
-            context: context,
-            title: 'Адрес',
-          ),
-          Text(
-            user?.address ?? 'Не указан',
-            style: theme.textTheme.bodyMedium,
+          AppTextField(
+            labelText: 'Адрес',
+            hintText: 'Адрес',
+            textController: wm.addressTextController,
           ),
           const SizedBox(
             height: 20,
           ),
-          lableText(
-            context: context,
-            title: 'Дата рождения',
-          ),
-          Text(
-            user?.birthday?.formatDate ?? 'Не указана',
-            style: theme.textTheme.bodyMedium,
+          AppTextField(
+            labelText: 'Дата рождения',
+            hintText: 'Дата рождения',
+            textController: wm.birthdayTextController,
           ),
           const SizedBox(
             height: 20,
+          ),
+          AppButton(
+            width: double.infinity,
+            title: 'Сохранить',
+            onPressed: () {
+              wm.editUser();
+            },
           ),
         ],
       ),

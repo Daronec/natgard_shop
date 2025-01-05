@@ -21,6 +21,7 @@ abstract class AppTheme {
       secondary: AppColors.secondary,
       onSecondary: AppColors.secondary,
       tertiary: AppColors.darkGrey,
+      tertiaryContainer: AppColors.grey,
       error: AppColors.error,
       onError: AppColors.error,
       surface: AppColors.darkGreen,
@@ -227,6 +228,14 @@ abstract class AppTheme {
       ),
       selectedItemColor: AppColors.background,
       unselectedItemColor: AppColors.background,
+    ),
+
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: AppColors.white,
+    ),
+
+    listTileTheme: const ListTileThemeData(
+      tileColor: AppColors.white,
     ),
 
     /// Chip theme

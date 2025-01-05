@@ -110,9 +110,9 @@ class _AppScaffoldState extends State<AppScaffold> {
                     },
                     leading: icons(
                         iconsType: navbarList()[index].icons,
-                        active:
-                            index == viewModel.calculateSelectedIndex(context),
+                        active: index == viewModel.calculateSelectedIndex(context),
                         theme: theme),
+                    titleTextStyle: theme.textTheme.bodyMedium,
                     title: Text(
                       navbarList()[index].label ?? '',
                     ),
@@ -133,82 +133,6 @@ class _AppScaffoldState extends State<AppScaffold> {
               title: Text('Page'),
             ),
         body: widget.child,
-        // bottomNavigationBar: widget.navBar
-        //     ? DecoratedBox(
-        //         decoration: BoxDecoration(
-        //           boxShadow: [
-        //             BoxShadow(
-        //               color: theme.colorScheme.onBackground.withOpacity(0.15),
-        //               // blurRadius: 30,
-        //             )
-        //           ],
-        //         ),
-        //         child: BottomNavigationBar(
-        //           currentIndex: viewModel.calculateSelectedIndex(context),
-        //           onTap: (int index) => viewModel.onItemTapped(
-        //             index,
-        //             context,
-        //             token,
-        //           ),
-        //           items: [
-        //             BottomNavigationBarItem(
-        //               icon: Padding(
-        //                 key: UniqueKey(),
-        //                 padding: const EdgeInsets.only(
-        //                   bottom: 5,
-        //                   top: 5,
-        //                 ),
-        //                 child: icons(
-        //                   iconsType: navbarList()[0].icons!,
-        //                   active: false,
-        //                   theme: theme,
-        //                 ),
-        //               ),
-        //               activeIcon: Padding(
-        //                 key: UniqueKey(),
-        //                 padding: const EdgeInsets.only(
-        //                   bottom: 5,
-        //                   top: 5,
-        //                 ),
-        //                 child: icons(
-        //                   iconsType: navbarList()[0].icons!,
-        //                   active: true,
-        //                   theme: theme,
-        //                 ),
-        //               ),
-        //               label: navbarList()[0].label,
-        //             ),
-        //             BottomNavigationBarItem(
-        //               icon: Padding(
-        //                 key: UniqueKey(),
-        //                 padding: const EdgeInsets.only(
-        //                   bottom: 5,
-        //                   top: 5,
-        //                 ),
-        //                 child: icons(
-        //                   iconsType: navbarList()[1].icons!,
-        //                   active: false,
-        //                   theme: theme,
-        //                 ),
-        //               ),
-        //               activeIcon: Padding(
-        //                 key: UniqueKey(),
-        //                 padding: const EdgeInsets.only(
-        //                   bottom: 5,
-        //                   top: 5,
-        //                 ),
-        //                 child: icons(
-        //                   iconsType: navbarList()[1].icons!,
-        //                   active: true,
-        //                   theme: theme,
-        //                 ),
-        //               ),
-        //               label: navbarList()[1].label,
-        //             ),
-        //           ],
-        //         ),
-        //       )
-        //     : null,
       ),
     );
   }
