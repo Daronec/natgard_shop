@@ -36,15 +36,19 @@ abstract interface class IAudioWM implements IWidgetModel {
 
   UnionStateNotifier<bool> get result;
 
+  UnionStateNotifier<AudioState> get audioState;
+
   String? get fileLink;
 
-  Future<void> getAudioData(String channelId) async {}
+  Future<void> getAudioData();
 
-  Future<void> addAudio(AudioDto value) async {}
+  Future<void> addAudio(AudioDto value);
 
-  Future<void> editAudio(AudioDto value) async {}
+  Future<bool?> editAudio(AudioDto value);
 
-  Future<void> deleteAudio(AudioDto value) async {}
+  Future<void> deleteAudio(AudioDto value);
+
+  void changeAudioState();
 }
 
 /// {@template feature_example_wm.class}
@@ -73,7 +77,7 @@ final class AudioWM extends WidgetModel<AudioScreen, AudioModel> implements IAud
   }
 
   @override
-  Future<void> getAudioData(String channelId) async {
+  Future<void> getAudioData() async {
     unawaited(model.getAudioData());
   }
 
@@ -91,7 +95,15 @@ final class AudioWM extends WidgetModel<AudioScreen, AudioModel> implements IAud
   UnionStateNotifier<List<String>> get audioUploaded => model.audioUploaded;
 
   @override
-  Future<void> editAudio(AudioDto value) async {
-    model.editAudio(value);
+  Future<bool?> editAudio(AudioDto value) async {
+    return await model.editAudio(value);
+  }
+
+  @override
+  UnionStateNotifier<AudioState> get audioState => model.audioState;
+
+  @override
+  void changeAudioState() {
+    model.changeAudioState();
   }
 }

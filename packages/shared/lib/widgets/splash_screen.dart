@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: SizedBox(
             width: MediaQuery.sizeOf(context).width / 2,
-            child: Assets.images.logo.image(),
+            child: Assets.images.logo.image(package: 'shared',),
           ),
         ),
       ),

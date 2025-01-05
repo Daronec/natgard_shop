@@ -1,5 +1,5 @@
 import 'package:admin_web/ui/audio/presentation/audio_wm.dart';
-import 'package:admin_web/ui/audio/presentation/widgets/add_audio_dialog.dart';
+import 'package:admin_web/ui/audio/presentation/widgets/add_audio.dart';
 import 'package:shared/imports.dart';
 
 class AudioList extends StatelessWidget {
@@ -24,16 +24,16 @@ class AudioList extends StatelessWidget {
           height: 10,
         );
       },
-      itemBuilder: (ctx, index) {
+      itemBuilder: (context, index) {
         return ListTile(
           onTap: () {
             showDialog(
               context: context,
               builder: (ctx) {
-                return AddAudioDialog(
+                return AddAudio(
                   audio: audio[index],
                   onEdit: (value) async {
-                    await wm.editAudio(value);
+                    await wm.editAudio(value).then((result) {});
                   },
                   wm: wm,
                 );

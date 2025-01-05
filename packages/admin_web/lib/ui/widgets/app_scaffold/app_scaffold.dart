@@ -150,21 +150,20 @@ class _AppScaffoldState extends State<AppScaffold> {
               ),
               title: Text(title),
               actions: [
-                if (token != null)
-                  AppButton(
-                    height: 30,
-                    width: 100,
-                    title: 'Выйти',
-                    color: theme.colorScheme.tertiaryContainer,
-                    onPressed: () async {
-                      await FirebaseAuth.instance.signOut().then((_) async {
-                        final appScope = context.read<IAppScope>();
-                        await appScope.tokenStorage.delete().then((_) {
-                          context.pushNamed(Pages.auth.value);
-                        });
+                AppButton(
+                  height: 30,
+                  width: 100,
+                  title: 'Выйти',
+                  color: theme.colorScheme.tertiaryContainer,
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut().then((_) async {
+                      final appScope = context.read<IAppScope>();
+                      await appScope.tokenStorage.delete().then((_) {
+                        context.pushNamed(Pages.auth.value);
                       });
-                    },
-                  ),
+                    });
+                  },
+                ),
                 const SizedBox(
                   width: 20,
                 ),
