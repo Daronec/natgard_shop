@@ -16,6 +16,8 @@ class AudioDto with _$AudioDto {
     String? videoLink,
     String? description,
     String? shortDescription,
+    String? retelling,
+    String? retellingLink,
     String? fileLink,
     @JsonKey(
       includeToJson: false,

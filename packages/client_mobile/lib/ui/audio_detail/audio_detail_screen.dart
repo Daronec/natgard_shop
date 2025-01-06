@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:client_mobile/ui/widgets/app_scaffold/app_scaffold.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -154,7 +154,7 @@ class _AudioDetailScreenState extends State<AudioDetailScreen> {
       appBar: CustomAppBar(
         title: widget.audio.title ?? '',
       ),
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,6 +214,7 @@ class _AudioDetailScreenState extends State<AudioDetailScreen> {
                     children: [
                       Text(
                         widget.audio.name!,
+                        style: theme.textTheme.bodyMedium,
                       ),
                       const SizedBox(
                         height: 6,
@@ -269,12 +270,61 @@ class _AudioDetailScreenState extends State<AudioDetailScreen> {
                   ),
                 ),
               ),
+            if (widget.audio.videoLink != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    openUrl(widget.audio.videoLink!);
+                  },
+                  child: Text(
+                    'Перейти на YouTube',
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: theme.colorScheme.scrim,
+                      color: theme.colorScheme.scrim,
+                    ),
+                  ),
+                ),
+              ),
             if (widget.audio.description != null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  widget.audio.description!,
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Linkify(
+                  onOpen: (link) => openUrl(link.url),
+                  text: widget.audio.description!
+                      .replaceAll('•', '\n•')
+                      .replaceAllMapped(
+                        timeRegex,
+                        (match) => '\n$match',
+                      )
+                      .replaceAllMapped(
+                        timeShortRegex,
+                        (match) => '\n$match',
+                      ),
                   style: theme.textTheme.bodyMedium,
+                ),
+              ),
+            if (widget.audio.description != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Пересказ',
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      widget.audio.retelling!.replaceAll(' 0', '\n\n0').replaceAll('•', '\n•'),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
               ),
           ],

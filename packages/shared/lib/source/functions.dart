@@ -151,8 +151,8 @@ String diffTime({
   return time;
 }
 
-Future<void> openUrl(String phone) async {
-  final Uri url = Uri.parse(phone);
+Future<void> openUrl(String link) async {
+  final Uri url = Uri.parse(link);
   if (!await launchUrl(url)) {
     throw Exception('Could not launch $url');
   }

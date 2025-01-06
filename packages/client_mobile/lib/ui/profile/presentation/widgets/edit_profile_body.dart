@@ -40,8 +40,25 @@ class EditProfileBody extends StatelessWidget {
             height: 20,
           ),
           AppTextField(
+            labelText: 'Отчество',
+            hintText: 'Отчество',
+            textController: wm.patronymicTextController,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          AppTextField(
+            labelText: 'Фамилия',
+            hintText: 'Фамилия',
+            textController: wm.surnameTextController,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          AppTextField(
             labelText: 'Телефон',
             hintText: 'Телефон',
+            type: TextFieldType.phoneNumber,
             textController: wm.phoneTextController,
           ),
           const SizedBox(
@@ -66,6 +83,7 @@ class EditProfileBody extends StatelessWidget {
           AppTextField(
             labelText: 'Дата рождения',
             hintText: 'Дата рождения',
+            type: TextFieldType.date,
             textController: wm.birthdayTextController,
           ),
           const SizedBox(

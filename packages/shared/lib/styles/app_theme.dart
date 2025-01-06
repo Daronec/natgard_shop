@@ -26,6 +26,7 @@ abstract class AppTheme {
       onError: AppColors.error,
       surface: AppColors.darkGreen,
       onSurface: AppColors.darkGreen,
+      scrim: AppColors.lightBlue,
     ),
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: AppColors.primary,

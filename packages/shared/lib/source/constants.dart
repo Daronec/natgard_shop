@@ -29,6 +29,9 @@ List<String> videoCodes = [
   """,
 ];
 
+RegExp timeRegex = RegExp('^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)');
+RegExp timeShortRegex = RegExp('^([01][0-9]|2[0-3]):[0-5][0-9]');
+
 /// Type for Flutter Toast
 enum PageState {
   error,
@@ -37,25 +40,6 @@ enum PageState {
   isEmpty,
   hasData,
   load,
-}
-
-enum NotificationType {
-  ordinary('ordinary'),
-  invitation('invitation'),
-  joinRequest('join_request'),
-  bid('bid');
-
-  const NotificationType(this.value);
-
-  final String value;
-
-  static NotificationType fromJson(String value) {
-    if (NotificationType.values.contains(values.byName(value))) {
-      final type = values.byName(value);
-      return type;
-    }
-    return NotificationType.ordinary;
-  }
 }
 
 /// Navigation bar item type
@@ -67,15 +51,7 @@ enum IconsType {
   users,
 }
 
-enum AuthBodyType {
-  login,
-  nickname,
-  name,
-  surname,
-  birthday,
-  interests,
-  photo,
-}
+
 
 List<Color> gradientColors = const [
   AppColors.darkGreen,
@@ -134,26 +110,4 @@ List<Color> gradientColorsYellow = const [
   Color(0xffD99443),
 ];
 
-List<String> interestList = [
-  'Путешествия',
-  'Строительство',
-  'Финансы',
-  'Инвестиции',
-  'IT',
-  'Веб-разработка',
-  'Юриспруденция',
-  'Разработка ПО',
-  'Моушен-дизайн',
-  'Здоровье',
-  'Спорт',
-  'Релокейт',
-  'Гостиничный бизнес',
-  'Маркетинг',
-];
 
-List<String> emojiList = [
-  'assets/images/laugh.png',
-  'assets/images/cute.png',
-  'assets/images/facepalm.png',
-  'assets/images/inLove.png',
-];

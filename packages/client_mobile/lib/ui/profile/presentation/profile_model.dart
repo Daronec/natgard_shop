@@ -163,9 +163,13 @@ final class ProfileModel extends BaseModel {
         surname: _surnameTextController.text,
         phone: _phoneTextController.text,
         email: _emailTextController.text,
-        birthday: _birthdayTextController.text.formatDateToDate,
         address: _addressTextController.text,
       );
+      if (_birthdayTextController.text.isNotEmpty) {
+        user = user.copyWith(
+          birthday: _birthdayTextController.text.formatDateToDate,
+        );
+      }
       final ref = db.collection("users").doc(user.id);
       await ref.update(user.toJson()).then(
         (doc) {

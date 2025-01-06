@@ -181,10 +181,12 @@ class _AudioItemState extends State<AudioItem> {
                       imageId: 'https://img.youtube.com/vi/${widget.audio.youtubeId!}/0.jpg',
                     ),
                   ),
-                Text(
-                  widget.audio.title ?? '',
-                  style: theme.textTheme.labelLarge,
-                  softWrap: true,
+                Expanded(
+                  child: Text(
+                    widget.audio.title ?? '',
+                    style: theme.textTheme.labelMedium,
+                    softWrap: true,
+                  ),
                 ),
               ],
             ),
@@ -200,84 +202,87 @@ class _AudioItemState extends State<AudioItem> {
                 ),
               ),
             if (widget.audio.fileLink != null)
-              ListTile(
-                shape: RoundedRectangleBorder(
+              DecoratedBox(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  side: const BorderSide(
+                  border: Border.all(
                     width: 2,
                     color: AppColors.darkGrey,
                   ),
                 ),
-                leading: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        if (_isPlaying) {
-                          _pause();
-                        } else {
-                          _play();
-                        }
-                      },
-                      child: Icon(
-                        _isPlaying ? Icons.pause_circle_outline : Icons.play_circle_outline,
-                        color: _isPlaying ? Colors.orange : AppColors.primary,
-                        size: 36,
-                      ),
-                    ),
-                    if (_isPlaying || _isPaused)
+                child: ListTile(
+                  leading: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
                       InkWell(
                         onTap: () {
-                          _stop();
+                          if (_isPlaying) {
+                            _pause();
+                          } else {
+                            _play();
+                          }
                         },
-                        child: const Icon(
-                          Icons.stop_circle_outlined,
-                          color: AppColors.error,
+                        child: Icon(
+                          _isPlaying ? Icons.pause_circle_outline : Icons.play_circle_outline,
+                          color: _isPlaying ? Colors.orange : AppColors.primary,
                           size: 36,
                         ),
                       ),
-                  ],
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.audio.name!,
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Slider(
-                      onChanged: (value) {
-                        final duration = _duration;
-                        if (duration == null) {
-                          return;
-                        }
-                        final position = value * duration.inMilliseconds;
-                        player.seek(Duration(milliseconds: position.round()));
-                      },
-                      value: (_position != null &&
-                              _duration != null &&
-                              _position!.inMilliseconds > 0 &&
-                              _position!.inMilliseconds < _duration!.inMilliseconds)
-                          ? _position!.inMilliseconds / _duration!.inMilliseconds
-                          : 0.0,
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        _position != null
-                            ? '$_positionText / $_durationText'
-                            : _duration != null
-                                ? _durationText
-                                : '',
+                      if (_isPlaying || _isPaused)
+                        InkWell(
+                          onTap: () {
+                            _stop();
+                          },
+                          child: const Icon(
+                            Icons.stop_circle_outlined,
+                            color: AppColors.error,
+                            size: 36,
+                          ),
+                        ),
+                    ],
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.audio.name!,
                         style: theme.textTheme.bodySmall,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Slider(
+                        onChanged: (value) {
+                          final duration = _duration;
+                          if (duration == null) {
+                            return;
+                          }
+                          final position = value * duration.inMilliseconds;
+                          player.seek(Duration(milliseconds: position.round()));
+                        },
+                        value: (_position != null &&
+                                _duration != null &&
+                                _position!.inMilliseconds > 0 &&
+                                _position!.inMilliseconds < _duration!.inMilliseconds)
+                            ? _position!.inMilliseconds / _duration!.inMilliseconds
+                            : 0.0,
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          _position != null
+                              ? '$_positionText / $_durationText'
+                              : _duration != null
+                                  ? _durationText
+                                  : '',
+                          style: theme.textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
           ],

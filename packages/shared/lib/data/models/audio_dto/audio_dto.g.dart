@@ -15,6 +15,8 @@ _$AudioDtoImpl _$$AudioDtoImplFromJson(Map<String, dynamic> json) =>
       videoLink: json['videoLink'] as String?,
       description: json['description'] as String?,
       shortDescription: json['shortDescription'] as String?,
+      retelling: json['retelling'] as String?,
+      retellingLink: json['retellingLink'] as String?,
       fileLink: json['fileLink'] as String?,
     );
 
@@ -27,5 +29,7 @@ Map<String, dynamic> _$$AudioDtoImplToJson(_$AudioDtoImpl instance) =>
       'videoLink': instance.videoLink,
       'description': instance.description,
       'shortDescription': instance.shortDescription,
+      'retelling': instance.retelling,
+      'retellingLink': instance.retellingLink,
       'fileLink': instance.fileLink,
     };

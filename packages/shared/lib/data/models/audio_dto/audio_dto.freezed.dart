@@ -27,6 +27,8 @@ mixin _$AudioDto {
   String? get videoLink => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get shortDescription => throw _privateConstructorUsedError;
+  String? get retelling => throw _privateConstructorUsedError;
+  String? get retellingLink => throw _privateConstructorUsedError;
   String? get fileLink => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false, includeFromJson: false)
   Uint8List? get bytes => throw _privateConstructorUsedError;
@@ -54,6 +56,8 @@ abstract class $AudioDtoCopyWith<$Res> {
       String? videoLink,
       String? description,
       String? shortDescription,
+      String? retelling,
+      String? retellingLink,
       String? fileLink,
       @JsonKey(includeToJson: false, includeFromJson: false) Uint8List? bytes});
 }
@@ -80,6 +84,8 @@ class _$AudioDtoCopyWithImpl<$Res, $Val extends AudioDto>
     Object? videoLink = freezed,
     Object? description = freezed,
     Object? shortDescription = freezed,
+    Object? retelling = freezed,
+    Object? retellingLink = freezed,
     Object? fileLink = freezed,
     Object? bytes = freezed,
   }) {
@@ -112,6 +118,14 @@ class _$AudioDtoCopyWithImpl<$Res, $Val extends AudioDto>
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
               as String?,
+      retelling: freezed == retelling
+          ? _value.retelling
+          : retelling // ignore: cast_nullable_to_non_nullable
+              as String?,
+      retellingLink: freezed == retellingLink
+          ? _value.retellingLink
+          : retellingLink // ignore: cast_nullable_to_non_nullable
+              as String?,
       fileLink: freezed == fileLink
           ? _value.fileLink
           : fileLink // ignore: cast_nullable_to_non_nullable
@@ -140,6 +154,8 @@ abstract class _$$AudioDtoImplCopyWith<$Res>
       String? videoLink,
       String? description,
       String? shortDescription,
+      String? retelling,
+      String? retellingLink,
       String? fileLink,
       @JsonKey(includeToJson: false, includeFromJson: false) Uint8List? bytes});
 }
@@ -164,6 +180,8 @@ class __$$AudioDtoImplCopyWithImpl<$Res>
     Object? videoLink = freezed,
     Object? description = freezed,
     Object? shortDescription = freezed,
+    Object? retelling = freezed,
+    Object? retellingLink = freezed,
     Object? fileLink = freezed,
     Object? bytes = freezed,
   }) {
@@ -196,6 +214,14 @@ class __$$AudioDtoImplCopyWithImpl<$Res>
           ? _value.shortDescription
           : shortDescription // ignore: cast_nullable_to_non_nullable
               as String?,
+      retelling: freezed == retelling
+          ? _value.retelling
+          : retelling // ignore: cast_nullable_to_non_nullable
+              as String?,
+      retellingLink: freezed == retellingLink
+          ? _value.retellingLink
+          : retellingLink // ignore: cast_nullable_to_non_nullable
+              as String?,
       fileLink: freezed == fileLink
           ? _value.fileLink
           : fileLink // ignore: cast_nullable_to_non_nullable
@@ -219,6 +245,8 @@ class _$AudioDtoImpl implements _AudioDto {
       this.videoLink,
       this.description,
       this.shortDescription,
+      this.retelling,
+      this.retellingLink,
       this.fileLink,
       @JsonKey(includeToJson: false, includeFromJson: false) this.bytes});
 
@@ -240,6 +268,10 @@ class _$AudioDtoImpl implements _AudioDto {
   @override
   final String? shortDescription;
   @override
+  final String? retelling;
+  @override
+  final String? retellingLink;
+  @override
   final String? fileLink;
   @override
   @JsonKey(includeToJson: false, includeFromJson: false)
@@ -247,7 +279,7 @@ class _$AudioDtoImpl implements _AudioDto {
 
   @override
   String toString() {
-    return 'AudioDto(id: $id, youtubeId: $youtubeId, name: $name, title: $title, videoLink: $videoLink, description: $description, shortDescription: $shortDescription, fileLink: $fileLink, bytes: $bytes)';
+    return 'AudioDto(id: $id, youtubeId: $youtubeId, name: $name, title: $title, videoLink: $videoLink, description: $description, shortDescription: $shortDescription, retelling: $retelling, retellingLink: $retellingLink, fileLink: $fileLink, bytes: $bytes)';
   }
 
   @override
@@ -266,6 +298,10 @@ class _$AudioDtoImpl implements _AudioDto {
                 other.description == description) &&
             (identical(other.shortDescription, shortDescription) ||
                 other.shortDescription == shortDescription) &&
+            (identical(other.retelling, retelling) ||
+                other.retelling == retelling) &&
+            (identical(other.retellingLink, retellingLink) ||
+                other.retellingLink == retellingLink) &&
             (identical(other.fileLink, fileLink) ||
                 other.fileLink == fileLink) &&
             const DeepCollectionEquality().equals(other.bytes, bytes));
@@ -282,6 +318,8 @@ class _$AudioDtoImpl implements _AudioDto {
       videoLink,
       description,
       shortDescription,
+      retelling,
+      retellingLink,
       fileLink,
       const DeepCollectionEquality().hash(bytes));
 
@@ -310,6 +348,8 @@ abstract class _AudioDto implements AudioDto {
       final String? videoLink,
       final String? description,
       final String? shortDescription,
+      final String? retelling,
+      final String? retellingLink,
       final String? fileLink,
       @JsonKey(includeToJson: false, includeFromJson: false)
       final Uint8List? bytes}) = _$AudioDtoImpl;
@@ -331,6 +371,10 @@ abstract class _AudioDto implements AudioDto {
   String? get description;
   @override
   String? get shortDescription;
+  @override
+  String? get retelling;
+  @override
+  String? get retellingLink;
   @override
   String? get fileLink;
   @override
