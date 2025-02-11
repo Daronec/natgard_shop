@@ -1,5 +1,7 @@
 # natgard_shop
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/16f99ddf915647a7b58ba9cd464cac6b)](https://app.codacy.com/gh/Daronec/natgard_shop?utm_source=github.com&utm_medium=referral&utm_content=Daronec/natgard_shop&utm_campaign=Badge_Grade)
+
 Натуральные домашние продукты.
 
 flutter create --org ru.natgard client_mobile --platforms android, ios
