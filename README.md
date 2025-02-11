@@ -1,7 +1,9 @@
 # natgard_shop
 
-Натуральные домашние продукты.\n
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fa706d297c0b43d3954e091d724a2719)](https://app.codacy.com/gh/Daronec/natgard_shop/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)\n
+Натуральные домашние продукты.
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fa706d297c0b43d3954e091d724a2719)](https://app.codacy.com/gh/Daronec/natgard_shop/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 flutter create --org ru.natgard client_mobile --platforms android, ios
 flutter create --org ru.natgard admin_web --platforms web
 flutter create --org ru.natgard client_web --platforms web
